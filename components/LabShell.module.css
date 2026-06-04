@@ -1,0 +1,131 @@
+.shell { min-height: 100vh; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,12,16,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.topbarInner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.homeLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--text);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.homeDot {
+  width: 7px;
+  height: 7px;
+  background: var(--red);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--red);
+  display: inline-block;
+}
+.labNav {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+.labNavLink {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text3);
+  transition: all 0.15s;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+.labNavLink:hover { background: var(--bg3); color: var(--text2); }
+.labNavLink.active { background: var(--bg3); color: var(--text); }
+.ghLink {
+  color: var(--text3);
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+.ghLink:hover { color: var(--text); }
+
+.header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 36px 0 32px;
+}
+.headerInner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.headerMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.cwe {
+  font-size: 11px;
+  color: var(--text3);
+  background: var(--bg3);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+.ref {
+  font-size: 11px;
+  color: var(--blue);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.ref:hover { opacity: 1; }
+
+.headerTitle {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 800;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+.headerShort {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--red);
+  background: var(--red-dim);
+  border: 1px solid var(--red-mid);
+  padding: 3px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+.headerDesc {
+  font-size: 14px;
+  color: var(--text2);
+  max-width: 640px;
+  line-height: 1.7;
+}
+
+.main { padding: 32px 0 80px; }
+.mainInner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
+}

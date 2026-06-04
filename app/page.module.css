@@ -1,0 +1,298 @@
+.page { min-height: 100vh; }
+
+/* Nav */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 12, 16, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.navInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+.logoDot {
+  width: 8px;
+  height: 8px;
+  background: var(--red);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--red);
+  display: inline-block;
+}
+.navLinks { display: flex; gap: 24px; }
+.navLink {
+  font-size: 13px;
+  color: var(--text2);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.navLink:hover { color: var(--text); }
+
+/* Hero */
+.hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .heroRight { display: none; }
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green);
+  background: var(--green-dim);
+  border: 1px solid var(--green-mid);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+.heroBadgeDot {
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.heroTitle {
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+.heroAccent { color: var(--red); }
+
+.heroDesc {
+  font-size: 16px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 460px;
+}
+
+.heroCtas {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.heroStats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.stat { display: flex; flex-direction: column; gap: 2px; }
+.statNum { font-size: 22px; font-weight: 800; color: var(--text); }
+.statLabel { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; }
+.statDiv { width: 1px; height: 32px; background: var(--border2); }
+
+/* Terminal */
+.terminal {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+}
+.terminalHeader {
+  background: var(--bg3);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.terminalTitle {
+  margin-left: 8px;
+  font-size: 12px;
+  color: var(--text3);
+}
+.terminalBody {
+  padding: 16px 20px;
+  min-height: 240px;
+}
+.termLine {
+  font-size: 12px;
+  line-height: 1.8;
+  white-space: pre;
+}
+.termCmd   { color: var(--cyan); }
+.termOut   { color: var(--text2); }
+.termWarn  { color: var(--amber); }
+.termCritical { color: var(--red); font-weight: 700; }
+
+/* Disclaimer */
+.disclaimer {
+  max-width: 1200px;
+  margin: 0 auto 48px;
+  padding: 0 24px;
+}
+.disclaimer > div, .disclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--amber);
+  background: var(--amber-dim);
+  border: 1px solid rgba(227,179,65,0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+/* Labs */
+.labs {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+.labsHeader { margin-bottom: 32px; }
+.labsTitle {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.labsSubtitle { color: var(--text2); font-size: 15px; }
+
+.labsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.labCard {
+  display: block;
+  background: var(--bg2);
+  border-radius: 12px;
+  padding: 24px;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.labCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.labCardRed   { border: 1px solid var(--border2); }
+.labCardAmber { border: 1px solid var(--border2); }
+.labCardRed::before   { background: var(--red); }
+.labCardAmber::before { background: var(--amber); }
+.labCardRed:hover   { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,71,87,0.12); border-color: var(--red-mid); }
+.labCardAmber:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(227,179,65,0.12); border-color: rgba(227,179,65,0.4); }
+
+.labCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.labCardLeft { display: flex; align-items: center; gap: 8px; }
+.labCve { font-size: 11px; color: var(--text3); font-family: var(--font-mono); }
+.labShort {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  font-family: var(--font-mono);
+}
+
+.labCardTitle {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.labCardDesc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.labPayloads {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+.labPayload {
+  font-size: 11px;
+  color: var(--red);
+  background: var(--red-dim);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.labCardCta {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  transition: color 0.15s;
+}
+.labCard:hover .labCardCta { color: var(--text); }
+
+/* Footer */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text3);
+}
+.footerLinks {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.footerLinks a {
+  color: var(--text3);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footerLinks a:hover { color: var(--text2); }
