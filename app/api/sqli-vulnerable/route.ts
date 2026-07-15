@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+<<<<<<< HEAD
 import { getDb, queryRaw } from '@/lib/db';
 
 export async function POST(req: NextRequest) {
@@ -8,6 +9,15 @@ export async function POST(req: NextRequest) {
   const db = await getDb();
 
   // VULNERABLE: raw string concatenation into SQL
+=======
+import getDb, { queryRaw } from '@/lib/db';
+
+export async function POST(req: NextRequest) {
+  const { username } = await req.json();
+  const db = await getDb();
+
+  // VULNERABLE: direct string concatenation into SQL query
+>>>>>>> 952f1a1312c7c2bc2a6bb76427221fff9a98639a
   const query = `SELECT id, username, email, role FROM users WHERE username = '${username}'`;
 
   const { rows, error } = queryRaw(db, query);
